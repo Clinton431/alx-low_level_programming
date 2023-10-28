@@ -14,8 +14,8 @@ int q = n;
 
 for (p = 0; p < q; p++)
 {
-        dest[p] = src[p];
-        n--;
+	dest[p] = src[p];
+	n--;
 }
 return (dest);
 }
