@@ -2,69 +2,73 @@
 #include "main.h"
 
 /**
- * count_words - estimates the number of words in strings
- * @z: the string
- * Return: the number of words
+ *  count_word - helper function to count the number of words in a string
+ *  @s: string to evaluate
+ *  Return: number of words
  */
-int count_words(char *z)
+int count_word(char *s)
 {
-	int red, v, y;
+	int flag = 0;
+	int c;
+	int w = 0;
 
-	red = 0;
-	y = 0;
-
-	for (v = 0; z[v] != '\0'; v++)
-
-		if (z[v] == ' ')
+	for (c = 0; s[c] != '\0'; c++)
+	{
+		if (s[c] == ' ')
+			flag = 0;
+		else if (flag == 0)
 		{
-			red = 0;
+			flag = 1;
+			w++;
 		}
-			else if (red == 0)
-		{
-			red = 1;
-			y++;
-		}
-	return (y);
+	}
+
+	return (w);
 }
+
 /**
- * strtow - function that splits a string into words
- * @str: the string
- * Return: pointer to an array of strings or Null
+ *   **strtow - splits a string into words
+ *   @str: string to split
+ *   Return: pointer to an array of strings (Success) or NULL (Error)
  */
 char **strtow(char *str)
 {
-	char **blue, *green;
-	int f, r = 0, p = 0, words, v = 0, a, z;
+	char **matrix, *tmp;
+	int i = 0;
+	int k = 0;
+	int len = 0;
+	int c =  0;
+	int start, end, words;
 
-	while (*(str + p))
-		p++;
-	words = count_words(str);
+	while (*(str + len))
+		len++;
+	words = count_word(str);
 	if (words == 0)
 		return (NULL);
-	blue = (char **)malloc(sizeof(char *) * (words + 1));
-	if (blue == NULL)
-		return (NULL);
-	for (f = 0; f < p; f++)
+
+	for (i = 0; i <= len; i++)
 	{
-		if (str[f] == ' ' || str[f] == '\0')
+		if (str[i] == ' ' || str[i] == '\0')
 		{
-			if (v)
+			if (c)
 			{
-				z = f;
-				green = (char *)malloc(sizeof(char) * (v + 1));
-				if (green == NULL)
+				end = i;
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				if (tmp == NULL)
 					return (NULL);
-				while (a < z)
-					*green++ = str[a++];
-				*green = '\0';
-				blue[r] = green - v;
-				r++;
-				v = 0;
+				while (start < end)
+					*tmp++ = str[start++];
+				*tmp = '\0';
+				matrix[k] = tmp - c;
+				k++;
+				c = 0;
 			}
 		}
-		else if (v++ == 0)
-			a = f;
+		else if (c++ == 0)
+			start = i;
 	}
-	blue[r] = NULL;
-	return (blue);
+
+	matrix[k] = NULL;
+
+	return (matrix);
 }
